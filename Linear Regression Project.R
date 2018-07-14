@@ -1,0 +1,8 @@
+library(ggplot2)
+library(dplyr)
+bike <- read.csv("bikeshare.csv")
+bike$datetime <- as.POSIXct(bike$datetime)
+bike$hour <- sapply(bike$datetime,function(x){format(x,"%H")})
+bike$hour <- sapply(bike$hour,as.numeric)
+temp.model <- lm(count ~ . - datetime - casual - registered - atempi,bike)
+print(summary(temp.model))
